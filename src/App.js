@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Transition } from 'react-transition-group';
 
 function App() {
 
@@ -6,11 +7,19 @@ function App() {
 
   return (
     <div className="container">
-      <button onClick={() => {setToogle(!toogle)}}>Toogle</button>
+      <button onClick={() => { setToogle(!toogle) }}>Toogle</button>
       <hr />
       <div className={"blocks"}></div>
-        {toogle && <div className={"square blue"}>{toogle.toString()}</div>}
-     
+        <Transition
+          in={toogle}
+          timeout={{
+            enter: 1000,
+            exit: 2000
+          }}
+          mountOnEnter
+          unmountOnExit>
+          {state => <div className={`square blue ${state}`}>{state}</div>}
+        </Transition>
     </div>
   );
 }
